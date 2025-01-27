@@ -1,22 +1,27 @@
-name: OSV-Scanner PR Scan
+name: Go Release Process
 
-# Change "main" to your default branch if you use a different name, i.e. "master"
 on:
   push:
     branches:
-    - main
+      - "main" # triggers only if push new tag version, like `0.8.4` or else
 
 permissions:
   # Required to upload SARIF file to CodeQL. See: https://github.com/github/codeql-action/issues/2117
   actions: read
   # Require writing security events to upload SARIF file to security tab
   security-events: write
-  # Only need to read contents
+  # to fetch code (actions/checkout)
   contents: read
 
 jobs:
-  scan-pr:
+  osv-scan:
     uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.9.2"
-    with: |-
-      --skip-git
-      ./client
+    with:
+      # Only scan the top level go.mod file without recursively scanning directories since
+      # this is pipeline is about releasing the go module and binary
+      scan-args: |-
+        --skip-git
+        ./
+    permissions:
+      # Require writing security events to upload SARIF file to security tab
+      security-events: write
