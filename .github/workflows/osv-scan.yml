@@ -17,5 +17,6 @@ jobs:
     with:
       # Scan the top-level package-lock.json and package.json files
       scan-args: |-
+        --recursive
         --skip-git
         ./
