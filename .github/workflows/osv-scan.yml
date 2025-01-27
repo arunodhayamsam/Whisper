@@ -5,11 +5,11 @@ on:
     branches:
       - "main" # triggers only if a new version tag is pushed, like `0.8.4` or else
 
-permissions:
-  # Adjusting the permissions for calling a reusable workflow
-  actions: none  # Change this to 'none' for reusable workflows
-  contents: none  # Change this to 'none' for reusable workflows
-  security-events: write  # Keep this as write since we are uploading SARIF for security
+# permissions:
+#   # Adjusting the permissions for calling a reusable workflow
+#   actions: none  # Change this to 'none' for reusable workflows
+#   contents: none  # Change this to 'none' for reusable workflows
+#   security-events: write  # Keep this as write since we are uploading SARIF for security
 
 jobs:
   osv-scan:
