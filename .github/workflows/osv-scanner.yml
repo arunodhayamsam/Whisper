@@ -45,31 +45,68 @@ jobs:
             echo "scan-result=fail" >> $GITHUB_ENV
           fi      
 
-      - name: Show Scan Result
-        run: |
-          echo "Scan Result: ${{ env.scan-result }}"        
+      # - name: Show Scan Result
+      #   run: |
+      #     echo "Scan Result: ${{ env.scan-result }}"        
 
+      # - name: Check Scan Result
+      #   run: |
+      #     if [ "${{ env.scan-result }}" == "fail" ]; then
+      #       echo "Vulnerabilities found."
+      #       cd client  # Ensure this directory exists, or change to the correct directory
+      #       ls -la
+      #       npm install
+      #       npm audit fix --force
+      #       git config --global user.name "arunodhayamsam"
+      #       git config --global user.email "100224916+arunodhayamsam@users.noreply.github.com"
+      #       git checkout -b feature/npm-audit-fix-branch
+      #       git status
+      #       git add package-lock.json package.json
+      #       git commit -m "Fix vulnerabilities using npm audit fix"
+      #       git push origin feature/npm-audit-fix-branch -f
+      #     else
+      #       echo "No Vulnerabilities"  
+      #     fi   
+
+      # - name: Commit and Push Changes
+      #   run: |
+
+  npm-audit-fix:
+    name: Run npm audit fix and Create PR
+    runs-on: ubuntu-latest
+    needs: osv-scan
+    steps:
       - name: Check Scan Result
         run: |
-          if [ "${{ env.scan-result }}" == "fail" ]; then
-            echo "Vulnerabilities found."
-            cd client  # Ensure this directory exists, or change to the correct directory
-            ls -la
-            npm install
-            npm audit fix --force
-          else
-            echo "No Vulnerabilities"  
-          fi   
+          if [ "${{ env.scan-result }}" != "fail" ]; then
+            echo "No vulnerabilities found. Skipping npm audit fix."
+            exit 0
+          fi
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run npm audit fix
+        run: npm audit fix || echo "No vulnerabilities to fix"
 
       - name: Commit and Push Changes
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-          git checkout -b feature/npm-audit-fix-branch
+          git config user.name "arunodhayamsam"
+          git config user.email "100224916+arunodhayamsam@users.noreply.github.com"
           git status
+          git checkout -b npm-audit-fix-branch
           git add package-lock.json package.json
           git commit -m "Fix vulnerabilities using npm audit fix"
-          git push origin feature/npm-audit-fix-branch     
+          git push origin npm-audit-fix-branch      
+              
         # continue-on-error: true  
 
       # - name: "Run osv-scanner-reporter"
