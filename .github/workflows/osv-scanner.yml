@@ -45,9 +45,9 @@ jobs:
             echo "scan-result=fail" >> $GITHUB_ENV
           fi      
 
-      # - name: Show Scan Result
-      #   run: |
-      #     echo "Scan Result: ${{ env.scan-result }}"        
+      - name: Show Scan Result
+        run: |
+          echo "Scan Result: ${{ env.scan-result }}"        
 
       # - name: Check Scan Result
       #   run: |
@@ -95,9 +95,7 @@ jobs:
         run: |
           cd client
           npm install
-
-      - name: Run npm audit fix
-        run: npm audit fix --force
+          npm audit fix --force
 
       - name: Commit and Push Changes
         run: |
