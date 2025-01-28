@@ -103,7 +103,7 @@ jobs:
           git config user.email "100224916+arunodhayamsam@users.noreply.github.com"
           git status
           git checkout -b npm-audit-fix-branch
-          git add package-lock.json package.json
+          git add client/package-lock.json client/package.json
           git commit -m "Fix vulnerabilities using npm audit fix"
           git push origin npm-audit-fix-branch      
               
