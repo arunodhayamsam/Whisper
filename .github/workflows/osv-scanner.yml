@@ -97,7 +97,7 @@ jobs:
           npm install
 
       - name: Run npm audit fix
-        run: npm audit fix || echo "No vulnerabilities to fix"
+        run: npm audit fix --force
 
       - name: Commit and Push Changes
         run: |
