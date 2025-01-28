@@ -19,23 +19,38 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
+          
       - name: "Run scanner"
+        id: run-scanner
         uses: google/osv-scanner/actions/scanner@main
         with:
           scan-args: |-
             --recursive
             --skip-git=true
             ./
+
+      - name: Capture Scan Result
+        if: always()
+        run: |
+          if [ "${{ steps.run-scanner.outcome }}" == "success" ]; then
+            echo "scan-result=pass" >> $GITHUB_ENV
+          else
+            echo "scan-result=fail" >> $GITHUB_ENV
+          fi      
+
+      - name: Show Scan Result
+        run: |
+          echo "Scan Result: ${{ env.scan-result }}"    
         # continue-on-error: true  
 
-      - name: "Run osv-scanner-reporter"
-        uses: google/osv-scanner/actions/reporter@main
-        with:
-          scan-args: |-
-            --output=results.sarif
-            --new=results.json
-            --gh-annotations=false 
-        continue-on-error: true 
+      # - name: "Run osv-scanner-reporter"
+      #   uses: google/osv-scanner/actions/reporter@main
+      #   with:
+      #     scan-args: |-
+      #       --output=results.sarif
+      #       --new=results.json
+      #       --gh-annotations=false 
+      #   continue-on-error: true 
 
-      - name: Check
-        run: echo "run or not"     
+      # - name: Check
+      #   run: echo "run or not"     
