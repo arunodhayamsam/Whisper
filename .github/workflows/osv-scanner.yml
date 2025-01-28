@@ -5,15 +5,15 @@ on:
     branches: ["main"]
       
 
-permissions: {}
+permissions: 
 #   # Required permissions for the workflow
-#   security-events: write
-#  contents: write  # Needed for committing and pushing changes
+  contents: read
+  security-events: write
 
 jobs:
   osv-scan:
     permissions:
-      contents: read # to fetch code (actions/checkout)
+      contents: read
       security-events: write # for uploading SARIF files
     runs-on: ubuntu-latest
     steps:
