@@ -2,7 +2,8 @@ name: OSV-Scanner with Auto Fix
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+      
 
 permissions: {}
 #   # Required permissions for the workflow
@@ -60,14 +61,15 @@ jobs:
             echo "No Vulnerabilities"  
           fi   
 
-      - name: "Run scanner"
-        uses: google/osv-scanner/actions/scanner@main
-        with:
-          scan-args: |-
-            --recursive
-            --skip-git=true
-            ./
-        continue-on-error: true     
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git checkout -b feature/npm-audit-fix-branch
+          git status
+          git add package-lock.json package.json
+          git commit -m "Fix vulnerabilities using npm audit fix"
+          git push origin feature/npm-audit-fix-branch     
         # continue-on-error: true  
 
       # - name: "Run osv-scanner-reporter"
