@@ -27,3 +27,13 @@ jobs:
             --skip-git=true
             ./
         continue-on-error: true  
+
+      - name: "Run osv-scanner-reporter"
+        uses: google/osv-scanner/actions/reporter@main
+        with:
+          scan-args: |-
+            --output=results.sarif
+            --new=results.json
+            --gh-annotations=false
+            --fail-on-vuln=true 
+        continue-on-error: true    
