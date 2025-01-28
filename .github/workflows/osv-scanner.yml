@@ -20,6 +20,11 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'    
+
       - name: "Run scanner"
         id: run-scanner
         uses: google/osv-scanner/actions/scanner@main
@@ -41,7 +46,7 @@ jobs:
 
       - name: Show Scan Result
         run: |
-          echo "Scan Result: ${{ env.scan-result }}"    
+          echo "Scan Result: ${{ env.scan-result }}"        
 
       - name: Check Scan Result
         run: |
@@ -50,10 +55,19 @@ jobs:
             cd client  # Ensure this directory exists, or change to the correct directory
             ls -la
             npm install
-            npm audit fix
+            npm audit fix --force
           else
             echo "No Vulnerabilities"  
-          fi    
+          fi   
+
+      - name: "Run scanner"
+        uses: google/osv-scanner/actions/scanner@main
+        with:
+          scan-args: |-
+            --recursive
+            --skip-git=true
+            ./
+        continue-on-error: true     
         # continue-on-error: true  
 
       # - name: "Run osv-scanner-reporter"
