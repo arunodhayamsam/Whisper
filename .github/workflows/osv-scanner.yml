@@ -105,7 +105,8 @@ jobs:
           git checkout -b npm-audit-fix-branch
           git add client/package-lock.json client/package.json
           git commit -m "Fix vulnerabilities using npm audit fix"
-          git push origin npm-audit-fix-branch      
+          git push https://arunodhayamsam:${{ secrets.GH_TOKEN }}@github.com/arunodhayamsam/Whisper.git npm-audit-fix-branch
+      
               
         # continue-on-error: true  
 
