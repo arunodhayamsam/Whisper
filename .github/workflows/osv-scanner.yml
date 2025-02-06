@@ -3,8 +3,11 @@ name: OSV-Scanner with Auto Fix
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches:
+      - main
+      - develop  
       
-
 permissions: 
 #   # Required permissions for the workflow
   contents: write
