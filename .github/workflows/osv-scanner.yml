@@ -29,11 +29,11 @@ jobs:
           node-version: 'lts/*'
       - name: "Run scanner"
         id: run-scanner
-        uses: google/osv-scanner/actions/scanner@main
+        uses: google/osv-scanner-action/osv-scanner-action@f8115f2f28022984d4e8070d2f0f85abcf6f3458
         with:
           scan-args: |-
-            -r
             --skip-git
+            --recursive
             ./
         continue-on-error: true
       - name: Capture Scan Result
