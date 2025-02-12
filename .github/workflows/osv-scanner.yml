@@ -66,16 +66,27 @@ jobs:
         uses: actions/setup-node@v3
         with:
            node-version: 'lts/*'
-      - name: Install Dependencies
+      - name: Install Dependencies on client
         run: |
           ls -la
+          cd client
           npm install 
           npm audit fix --force
+      - name: Install Dependencies on server
+        run: |
+          ls -la
+          cd server
+          npm install 
+          npm audit fix --force    
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: Finding the vulnerabilities
-          branch: feature/example-patches  
+          branch: feature/example-patches 
+          base: ${{ github.head_ref }}
+          title: 'Fix vulnerabilities in ${{ steps.get-source-branch.outputs.source-branch }}'
+          body: |
+            This PR was created automatically to fix vulnerabilities detected during the scan. 
 
       
