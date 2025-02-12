@@ -51,13 +51,24 @@ jobs:
           ls -la
           cd server
           npm install 
-          npm audit fix --force    
+          npm audit fix --force 
+
+      - name: Commit and Push Changes
+        run: |
+           git config user.name "arunodhayamsam"
+           git config user.email "100224916+arunodhayamsam@users.noreply.github.com"
+           git status
+           git checkout -b ${{ inputs.newfixbranch }}
+           git status
+           git add .
+           git commit -m "Fix vulnerabilities using npm audit fix"
+           git push https://arunodhayamsam:${{ secrets.GH_TOKEN }}@github.com/arunodhayamsam/Whisper.git ${{ inputs.newfixbranch }}       
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GH_TOKEN }}
-          commit-message: Finding the vulnerabilities
+          commit-message: Fix vulnerabilities using npm audit fix
           branch: ${{ inputs.newfixbranch }}
           base: ${{ inputs.targetbranch }}
           body: |
