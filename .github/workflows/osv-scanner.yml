@@ -29,7 +29,7 @@ jobs:
           node-version: 'lts/*'
       - name: "Run scanner"
         id: run-scanner
-        uses: google/osv-scanner-action/osv-scanner-action@f8115f2f28022984d4e8070d2f0f85abcf6f3458
+        uses: google/osv-scanner-action/osv-scanner-action@main
         with:
           scan-args: |-
             --skip-git
