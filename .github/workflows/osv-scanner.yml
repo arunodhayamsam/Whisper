@@ -1,5 +1,4 @@
-name: OSV-Scanner with Auto Fix
-
+name: OSV-Scanner to find vulnerabilities
 on:
   pull_request:
     branches:
