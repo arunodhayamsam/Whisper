@@ -83,6 +83,10 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: Finding the vulnerabilities
-          branch: feature/example-patches  
+          branch: feature/example-patches 
+          base: ${{ github.head_ref }}
+          title: 'Fix vulnerabilities in ${{ steps.get-source-branch.outputs.source-branch }}'
+          body: |
+            This PR was created automatically to fix vulnerabilities detected during the scan. 
 
       
