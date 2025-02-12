@@ -3,15 +3,15 @@ name: OSV-Scanner with Auto Fix
 on:  
   workflow_dispatch:  
 
-inputs:
-  targetbranch:
-    description: Provide the pr raised branch
-    type: string
-    default: ""
-  newfixbranch:
-    description: Provide the branch to make the correction
-    type: string
-    default: "bugfix/"
+    inputs:
+      targetbranch:
+        description: Provide the pr raised branch
+        type: string
+        default: ""
+      newfixbranch:
+        description: Provide the branch to make the correction
+        type: string
+        default: "bugfix/"
 
 
 permissions: 
