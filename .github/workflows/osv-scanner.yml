@@ -83,7 +83,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: Finding the vulnerabilities
-          branch: feature/example-patches 
+          branch: bugfix/${{ github.head_ref }}
           base: ${{ github.head_ref }}
           # title: 'Fix vulnerabilities in ${{ steps.get-source-branch.outputs.source-branch }}'
           body: |
