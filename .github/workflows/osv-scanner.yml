@@ -1,11 +1,11 @@
 name: OSV-Scanner with Auto Fix
 
 on:
-  
   pull_request:
     branches:
       - main
       - develop  
+  workflow_dispatch:    
 
 permissions: 
   contents: write
@@ -29,11 +29,11 @@ jobs:
           node-version: 'lts/*'
       - name: "Run scanner"
         id: run-scanner
-        uses: google/osv-scanner/actions/scanner@main
+        uses: google/osv-scanner-action/osv-scanner-action@f8115f2f28022984d4e8070d2f0f85abcf6f3458
         with:
           scan-args: |-
+            --skip-git
             --recursive
-            --skip-git=true
             ./
         continue-on-error: true
       - name: Capture Scan Result
@@ -66,11 +66,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
            node-version: 'lts/*'
-      - name: Install Dependencies
+      - name: Install Dependencies on client
         run: |
           ls -la
+          cd client
           npm install 
           npm audit fix --force
+      - name: Install Dependencies on server
+        run: |
+          ls -la
+          cd server
+          npm install 
+          npm audit fix --force    
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
