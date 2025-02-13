@@ -3,3 +3,4 @@ name = "esbuild"
 ecosystem = "npm"
 group = "dev"
 ignore = true
+reason = "There is no direct usage of this package, which is coming from the another dev dependency(vite), we couldn't update it"
