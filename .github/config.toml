@@ -1,0 +1,5 @@
+[[PackageOverrides]]
+name = "esbuild"
+ecosystem = "npm"
+group = "dev"
+ignore = true
