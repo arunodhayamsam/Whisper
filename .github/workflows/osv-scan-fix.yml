@@ -43,14 +43,14 @@ jobs:
           ls -la
           git branch
           cd client
-          npm install 
+          npm install -f
           npm audit fix --force
       
       - name: Install Dependencies on server
         run: |
           ls -la
           cd server
-          npm install 
+          npm install -f
           npm audit fix --force 
 
       - name: Commit and Push Changes
