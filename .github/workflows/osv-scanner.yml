@@ -26,6 +26,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
+      - name: Instll Dependencies
+        run: |
+          cd client
+          npm install
       - name: "Run scanner"
         id: run-scanner
         uses: google/osv-scanner/actions/scanner@main
