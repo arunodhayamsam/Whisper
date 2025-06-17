@@ -28,11 +28,10 @@ jobs:
           node-version: 'lts/*'
       - name: "Run scanner"
         id: run-scanner
-        uses: google/osv-scanner-action/osv-scanner-action@main
+        uses: google/osv-scanner/actions/scanner@main
         with:
           scan-args: |-
-            --skip-git
             --config=.github/config.toml
-            --recursive
+            -r
             ./
         
